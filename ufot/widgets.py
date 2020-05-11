@@ -2,7 +2,7 @@ import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 import logging
 import numpy as np
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore
 import dxchange as dx
 import ufot.util as util
 import tifffile
@@ -167,7 +167,7 @@ class OverlapViewer(QtGui.QWidget):
             LOG.warn("No images set yet")
         else:
             pos = self.slider.value()
-            moved = np.roll(self.second, self.second.shape[0] / 2 - pos, axis=0)
+            moved = np.roll(self.second, int(self.second.shape[0] / 2 - pos), axis=0)
             self.image_item.setImage(moved - self.first)
 
 
