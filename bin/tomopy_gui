@@ -8,10 +8,10 @@ import argparse
 import logging
 import time
 import re
-from ufot import config #, __version__
+from tomopy_gui import config #, __version__
 
 
-LOG = logging.getLogger('ufot')
+LOG = logging.getLogger('tomopy_gui')
 
 
 def init(args):
@@ -22,13 +22,13 @@ def init(args):
 
 
 def rec(args):
-    from ufot import reco
+    from tomopy_gui import reco
     reco.tomo(args)
 
 
 def gui(args):
     try:
-        from ufot import gui
+        from tomopy_gui import gui
         gui.main(args)
     except ImportError as e:
         LOG.error(str(e))
