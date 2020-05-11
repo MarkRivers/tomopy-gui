@@ -1,7 +1,7 @@
 import argparse
 import sys
 import logging
-import ConfigParser as configparser
+import configparser as configparser
 from collections import OrderedDict
 import ufot.util as util
 import numpy as np
