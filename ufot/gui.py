@@ -13,7 +13,7 @@ import ufot.reco as reco
 from argparse import ArgumentParser
 import numpy as np
 from contextlib import contextmanager
-from PyQt4 import QtGui, QtCore, uic
+from PyQt5 import QtGui, QtCore, uic
 
 
 LOG = logging.getLogger(__name__)
@@ -314,7 +314,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def dx_file_select_clicked(self, checked):
         path = self.get_filename('Open DX file', 'Images (*.hdf *.h5)')
-        set_gui_startup(self, path)
+        set_gui_startup(self, path[0])
 
     def dx_file_load_clicked(self, checked):
         path = str(self.ui.dx_file_name_line.text())
