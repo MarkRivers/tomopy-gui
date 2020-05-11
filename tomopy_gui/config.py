@@ -3,11 +3,11 @@ import sys
 import logging
 import configparser as configparser
 from collections import OrderedDict
-import ufot.util as util
+import tomopy_gui.util as util
 import numpy as np
 
 LOG = logging.getLogger(__name__)
-NAME = "ufot.conf"
+NAME = "tomopy_gui.conf"
 SECTIONS = OrderedDict()
 
 SECTIONS['general'] = {
