@@ -4,11 +4,11 @@ import logging
 import pkg_resources
 import tifffile
 import dxchange as dx
-import ufot.widgets
-import ufot.process
-import ufot.util as util
-import ufot.config as config
-import ufot.reco as reco
+import tomopy_gui.widgets
+import tomopy_gui.process
+import tomopy_gui.util as util
+import tomopy_gui.config as config
+import tomopy_gui.reco as reco
 
 from argparse import ArgumentParser
 import numpy as np
@@ -224,13 +224,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.center_calibration = None
     
         # set up run-time widgets
-        self.projection_viewer = ufot.widgets.ProjectionViewer()
+        self.projection_viewer = tomopy_gui.widgets.ProjectionViewer()
         self.slice_viewer = None
         self.volume_viewer = None
-        self.overlap_viewer = ufot.widgets.OverlapViewer()
-        #self.slice_viewer = ufot.widgets.SliceViewer()
-        #self.volume_viewer = ufot.widgets.VolumeViewer()
-        #self.overlap_viewer = ufot.widgets.OverlapViewer()
+        self.overlap_viewer = tomopy_gui.widgets.OverlapViewer()
+        #self.slice_viewer = tomopy_gui.widgets.SliceViewer()
+        #self.volume_viewer = tomopy_gui.widgets.VolumeViewer()
+        #self.overlap_viewer = tomopy_gui.widgets.OverlapViewer()
 
         self.ui.overlap_layout.addWidget(self.overlap_viewer)
         self.ui.projection_dock.setWidget(self.projection_viewer)
@@ -340,7 +340,7 @@ class ApplicationWindow(QtGui.QMainWindow):
             last = proj[0,:,:].astype(np.float)
 
         with spinning_cursor():
-            self.center_calibration = ufot.process.CenterCalibration(first, last)
+            self.center_calibration = tomopy_gui.process.CenterCalibration(first, last)
 
         position = self.center_calibration.position
         self.overlap_viewer.set_images(first, last)
@@ -358,7 +358,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         filenames = get_filtered_filenames(path)
         LOG.warn("Loading {}".format(filenames))
         if not self.slice_viewer:
-            self.slice_viewer = ufot.widgets.SliceViewer(filenames)
+            self.slice_viewer = tomopy_gui.widgets.SliceViewer(filenames)
             self.slice_dock.setWidget(self.slice_viewer)
             self.ui.slice_dock.setVisible(True)
         else:
@@ -369,7 +369,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ui.projection_dock.setVisible(True)
 
         if not self.projection_viewer:
-            self.projection_viewer = ufot.widgets.ProjectionViewer(path)
+            self.projection_viewer = tomopy_gui.widgets.ProjectionViewer(path)
             self.projection_dock.setWidget(self.projection_viewer)
             self.ui.projection_dock.setVisible(True)
         else:
@@ -749,7 +749,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         try:
             self.params.flat_field_method = 'default'
             sections = config.TOMO_PARAMS + ('gui', 'retrieve-phase')
-            config.write('ufot.conf', args=self.params, sections=sections)
+            config.write('tomopy_gui.conf', args=self.params, sections=sections)
             config.write(str(self.params.input_path)+'.conf', args=self.params, sections=sections)
         except IOError as e:
             self.gui_warn(str(e))
@@ -757,9 +757,9 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def on_save_as(self):
         if os.path.exists(self.params.input_file_path):
-            config_file = str(self.params.input_file_path + "/ufot.conf")
+            config_file = str(self.params.input_file_path + "/tomopy_gui.conf")
         else:
-            config_file = str(os.getenv('HOME') + "ufot.conf")
+            config_file = str(os.getenv('HOME') + "tomopy_gui.conf")
         save_config = QtGui.QFileDialog.getSaveFileName(self, 'Save as ...', config_file)
         if save_config:
             sections = config.TOMO_PARAMS + ('gui',)
