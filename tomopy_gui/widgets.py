@@ -4,7 +4,7 @@ import logging
 import numpy as np
 from PyQt5 import QtGui, QtCore
 import dxchange as dx
-import ufot.util as util
+import tomopy_gui.util as util
 import tifffile
 
 LOG = logging.getLogger(__name__)
